@@ -63,7 +63,7 @@ def temp_observ():
     return jsonify(temps_observ_list)
 
 @climate_app.route("/api/v1.0/<start>")
-def start(start=None):
+def start(start):
 
     from_start = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start).group_by(Measurement.date).all()
     from_start_list=list(from_start)
@@ -71,7 +71,7 @@ def start(start=None):
     return jsonify(from_start_list)
 
 @climate_app.route("/api/v1.0/<start>/<end>")
-def start_end(start=None, end=None):
+def start_end(start, end):
     
     between_dates = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start).filter(Measurement.date <= end).group_by(Measurement.date).all()
     between_dates_list=list(between_dates)
